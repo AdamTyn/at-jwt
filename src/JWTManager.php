@@ -6,21 +6,20 @@ use AdamTyn\AT\JWT\Exceptions\{
     BadSignatureException,
     InvalidTokenException
 };
-use AdamTyn\AT\JWT\Contracts\SubjectInterface as Subject;
 
 class JWTManager
 {
     /**
-     * @param Subject $subject
+     * @param array $claim
      * @param bool $singleton
      * @param int $ttl
      * @return JWT
      */
-    public static function getToken(Subject $subject, bool $singleton = false, int $ttl = 0)
+    public static function getToken(array $claim, bool $singleton = false, int $ttl = 0)
     {
         $jwt = new JWT;
 
-        return $jwt->withClaim($subject)->singleton($singleton)->ttl($ttl);
+        return $jwt->withClaim($claim)->singleton($singleton)->ttl($ttl);
     }
 
     /**

@@ -1,42 +1,31 @@
 <?php
 
 use AdamTyn\AT\JWT\{JWT, JWTManager};
-use AdamTyn\AT\JWT\Contracts\SubjectInterface;
 use PHPUnit\Framework\TestCase;
 
 class JWTManagerTest extends TestCase
 {
-    public function testSubject()
+    public function testClaim()
     {
-        $subject = new class implements SubjectInterface {
-            public function getClaim(): array
-            {
-                return [
-                    'version' => 'v1.0.0',
-                    'app_name' => 'at-jwt'
-                ];
-            }
+        $claim = [
+            'version' => 'v1.0.0',
+            'app_name' => 'at-jwt'
+        ];
 
-            public function setClaim(array $claim)
-            {
-                // TODO: Implement setClaim() method.
-            }
-        };
+        $this->assertIsArray($claim);
 
-        $this->assertInstanceOf(SubjectInterface::class, $subject);
-
-        return $subject;
+        return $claim;
     }
 
     /**
-     * @depends testSubject
+     * @depends testClaim
      *
-     * @param SubjectInterface $subject
+     * @param array $claim
      * @return string
      */
-    public function testGetToken(SubjectInterface $subject)
+    public function testGetToken(array $claim)
     {
-        $token = JWTManager::getToken($subject);
+        $token = JWTManager::getToken($claim);
 
         $this->assertInstanceOf(JWT::class, $token);
 

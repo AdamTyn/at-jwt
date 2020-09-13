@@ -3,7 +3,6 @@
 namespace AdamTyn\AT\JWT;
 
 use AdamTyn\AT\JWT\Exceptions\DifferentAlgorithmException;
-use AdamTyn\AT\JWT\Contracts\SubjectInterface as Subject;
 
 /**
  * @author AdamTyn
@@ -82,12 +81,12 @@ class JWT
     }
 
     /**
-     * @param Subject $subject
+     * @param array $claim
      * @return JWT
      */
-    public function withClaim(Subject $subject)
+    public function withClaim(array $claim)
     {
-        $this->getPayload()->setSubject($subject->getClaim());
+        $this->getPayload()->setSubject($claim);
 
         $this->signed = false;
 

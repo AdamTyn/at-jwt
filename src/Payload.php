@@ -8,7 +8,6 @@ use AdamTyn\AT\JWT\Exceptions\{
     BadPayloadException
 };
 use AdamTyn\AT\JWT\Concerns\{Algorithm, Base64, JSON};
-use AdamTyn\AT\JWT\Contracts\SubjectInterface as Subject;
 
 class Payload
 {
@@ -20,7 +19,7 @@ class Payload
     protected $default;
 
     /**
-     * @var Subject
+     * @var DefaultSubject
      */
     protected $subject;
 
@@ -70,6 +69,10 @@ class Payload
         return $this;
     }
 
+    /**
+     * @param bool $open
+     * @return Payload
+     */
     public function singleton(bool $open)
     {
         $this->default->singleton = $open;

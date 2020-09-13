@@ -2,9 +2,7 @@
 
 namespace AdamTyn\AT\JWT;
 
-use AdamTyn\AT\JWT\Contracts\SubjectInterface as Subject;
-
-class DefaultSubject implements Subject
+class DefaultSubject
 {
     /**
      * @var array
