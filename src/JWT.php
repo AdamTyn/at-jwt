@@ -49,10 +49,36 @@ class JWT
     }
 
     /**
+     * @param array $claim
+     * @return JWT
+     */
+    public function withClaim(array $claim)
+    {
+        $this->getPayload()->setSubject($claim);
+
+        $this->signed = false;
+
+        return $this;
+    }
+
+    /**
+     * @param array $extra
+     * @return JWT
+     */
+    public function withExtra(array $extra)
+    {
+        $this->getHeader()->setExtra($extra);
+
+        $this->signed = false;
+
+        return $this;
+    }
+
+    /**
      * @param Header $header
      * @return JWT
      */
-    public function withHeader(Header $header)
+    public function setHeader(Header $header)
     {
         $this->header = $header;
 
@@ -67,26 +93,13 @@ class JWT
      *
      * @throws DifferentAlgorithmException
      */
-    public function withPayload(Payload $payload)
+    public function setPayload(Payload $payload)
     {
         if ($payload->getAlgorithm() !== $this->getHeader()->getAlgorithm()) {
             throw new DifferentAlgorithmException;
         }
 
         $this->payload = $payload;
-
-        $this->signed = false;
-
-        return $this;
-    }
-
-    /**
-     * @param array $claim
-     * @return JWT
-     */
-    public function withClaim(array $claim)
-    {
-        $this->getPayload()->setSubject($claim);
 
         $this->signed = false;
 
@@ -148,6 +161,8 @@ class JWT
     }
 
     /**
+     * @param $name
+     * @param $arguments
      * @return JWT
      */
     public function __call($name, $arguments)

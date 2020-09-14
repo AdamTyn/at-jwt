@@ -10,16 +10,15 @@ use AdamTyn\AT\JWT\Exceptions\{
 class JWTManager
 {
     /**
-     * @param array $claim
-     * @param bool $singleton
-     * @param int $ttl
+     * @param array $payload
+     * @param array $header
      * @return JWT
      */
-    public static function getToken(array $claim, bool $singleton = false, int $ttl = 0)
+    public static function getToken(array $payload, array $header = [])
     {
         $jwt = new JWT;
 
-        return $jwt->withClaim($claim)->singleton($singleton)->ttl($ttl);
+        return $jwt->withClaim($payload)->withExtra($header);
     }
 
     /**
@@ -47,7 +46,7 @@ class JWTManager
 
         $payload = Payload::generate($header, $payload);
 
-        $jwt = (new JWT)->withHeader($header)->withPayload($payload);
+        $jwt = (new JWT)->setHeader($header)->setPayload($payload);
 
         if ($jwt->sign(strval($header), strval($payload)) !== $signature) {
             throw new BadSignatureException;
