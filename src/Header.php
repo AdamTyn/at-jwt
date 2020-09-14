@@ -2,10 +2,11 @@
 
 namespace AdamTyn\AT\JWT;
 
+use AdamTyn\AT\JWT\Contracts\Renderable;
 use AdamTyn\AT\JWT\Exceptions\BadHeaderException;
 use AdamTyn\AT\JWT\Concerns\{Algorithm, Base64, JSON};
 
-class Header
+class Header implements Renderable
 {
     use JSON, Base64, Algorithm;
 
@@ -28,25 +29,39 @@ class Header
     }
 
     /**
-     * @param array $data
+     * @param array $extra
      * @return Header
      */
-    public function setExtra(array $data)
+    public function setExtra(array $extra)
     {
-        $this->extra = $data + $this->extra;
+        if (count($extra) > 0) {
+            $this->extra = $extra + $this->extra;
 
-        $this->done = false;
+            $this->done = false;
+        }
 
         return $this;
     }
 
     /**
+     * @return array
+     */
+    public function getExtra()
+    {
+        return $this->extra;
+    }
+
+    /**
      * @return string
      */
-    public function make()
+    public function render()
     {
         if (!$this->isDone()) {
-            $data = ['algorithm' => $this->algorithm->name(), 'type' => self::$type, 'extra' => $this->extra];
+            $data = [
+                'algorithm' => $this->algorithm->name(),
+                'type' => self::$type,
+                'extra' => $this->extra
+            ];
 
             $this->base64 = Base64URL::encode(self::jsonEncode($data));
 
@@ -72,9 +87,7 @@ class Header
 
         $data = self::jsonDecode($data);
 
-        list('extra' => $extra) = $data;
-
-        return (new self)->setExtra($extra);
+        return (new self)->setExtra($data['extra'] ?? []);
     }
 
     /**
@@ -82,6 +95,6 @@ class Header
      */
     public function __toString()
     {
-        return $this->make();
+        return $this->render();
     }
 }
