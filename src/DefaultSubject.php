@@ -2,7 +2,9 @@
 
 namespace AdamTyn\AT\JWT;
 
-class DefaultSubject
+use AdamTyn\AT\JWT\Contracts\Arrayable;
+
+class DefaultSubject implements Arrayable
 {
     /**
      * @var array
@@ -15,7 +17,9 @@ class DefaultSubject
      */
     public function setClaim(array $claim)
     {
-        $this->claim = $claim + $this->claim;
+        if (count($claim) > 0) {
+            $this->claim = $claim + $this->claim;
+        }
 
         return $this;
     }
@@ -33,5 +37,13 @@ class DefaultSubject
         }
 
         return $this->claim;
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return $this->getClaim();
     }
 }

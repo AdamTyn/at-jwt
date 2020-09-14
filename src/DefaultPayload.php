@@ -2,7 +2,9 @@
 
 namespace AdamTyn\AT\JWT;
 
-class DefaultPayload
+use AdamTyn\AT\JWT\Contracts\Arrayable;
+
+class DefaultPayload implements Arrayable
 {
     /**
      * @var int
@@ -35,5 +37,18 @@ class DefaultPayload
         }
 
         return ['expired', 'createdAt', 'updatedAt', 'singleton'];
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'expired' => $this->expired,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt,
+            'singleton' => $this->singleton
+        ];
     }
 }
