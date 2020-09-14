@@ -2,6 +2,7 @@
 
 namespace AdamTyn\AT\JWT;
 
+use AdamTyn\AT\JWT\Contracts\Renderable;
 use AdamTyn\AT\JWT\Exceptions\{
     InvalidDefaultPayloadException,
     SingletonTokenException,
@@ -9,7 +10,7 @@ use AdamTyn\AT\JWT\Exceptions\{
 };
 use AdamTyn\AT\JWT\Concerns\{Algorithm, Base64, JSON};
 
-class Payload
+class Payload implements Renderable
 {
     use JSON, Base64, Algorithm;
 
@@ -100,7 +101,7 @@ class Payload
     /**
      * @return string
      */
-    public function make()
+    public function render()
     {
         if (!$this->isDone()) {
             $data = [
@@ -174,6 +175,6 @@ class Payload
      */
     public function __toString()
     {
-        return $this->make();
+        return $this->render();
     }
 }
