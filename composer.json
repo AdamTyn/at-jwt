@@ -1,6 +1,6 @@
 {
   "name": "adamtyn/at-jwt",
-  "type": "composer-plugin",
+  "type": "library",
   "description": "一个纯粹的JWT扩展",
   "license": "MIT",
   "authors": [
