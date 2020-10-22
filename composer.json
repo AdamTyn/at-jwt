@@ -26,7 +26,6 @@
   },
   "require": {
     "php": "^7.0",
-    "ext-redis": "*",
     "ext-json": "*"
   },
   "require-dev": {
