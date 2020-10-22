@@ -8,7 +8,7 @@ final class Base64URL
      * @param string $after
      * @return string
      */
-    public static function decode(string $after): string
+    public static function decode(string $after)
     {
         $decoded = str_replace(['-', '_'], ['+', '/'], $after);
 

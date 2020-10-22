@@ -1,8 +1,15 @@
 {
   "name": "adamtyn/at-jwt",
+  "version": "1.0.0",
   "type": "library",
-  "description": "一个纯粹的JWT扩展",
+  "description": "一个纯粹的JWT扩展，无任何依赖组件",
   "license": "MIT",
+  "keywords": [
+    "JWT",
+    "adamtyn",
+    "JSON-WEB-TOKEN"
+  ],
+  "readme": "README.md",
   "authors": [
     {
       "name": "AdamTyn",
@@ -18,6 +25,7 @@
     ]
   },
   "require": {
+    "php": "^7.0",
     "ext-redis": "*",
     "ext-json": "*"
   },
